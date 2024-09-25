@@ -1,22 +1,19 @@
 
-const WeatherDisplay = (props) => {
+const WeatherDisplay = ( {apiWeather} ) => {
+
+  const iconUrl = `http://openweathermap.org/img/w/${apiWeather.icon}.png`
   
-  const weatherDetails = props;
- 
-    
   return (
-    <div>
-      TEST^
-    {/* //   <img src={imgDetails.url} alt={imgDetails.title} />
-    //   <br /> */}
-
-      {/* <h2>{weatherDetails.id}</h2>
-      <p>
-        {weatherDetails.main} description: {weatherDetails.description}
-      </p>
-      <br />
-
-      <p>{weatherDetails.icon}</p>  */}
+    <div className="weather_card">
+      <section>
+        <img src={iconUrl} alt="weather" />
+      </section>
+      <section>
+      <h3>Place: {apiWeather.name}</h3>
+      <h3> {apiWeather.main}</h3>
+      <h3>Description: {apiWeather.description}</h3>
+      </section>
+      
     </div>
   );
 };

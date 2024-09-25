@@ -3,20 +3,16 @@ import "./App.css";
 import WeatherDisplay from "./components/WeatherDisplay";
 
 function App() {
-  
-
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
-  const [weather, getWeather] = useState([]);
-  const [visible, setVisible] = useState(false);
+  const [apiWeather, getApiWeather] = useState({});
+  // const [visible, setVisible] = useState(false);
 
   const localize = () => {
     function success(position) {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
-
-      
     }
 
     function error() {
@@ -33,71 +29,53 @@ function App() {
 
   // localize();
 
-useEffect(() => {localize()}, []);
+  useEffect(() => {
+    localize();
+  }, []);
 
-useEffect(() => {
+  useEffect(() => {
+    const fetchWeather = async (latitude, longitude) => {
+      const apiKey = "d7b0a1249bc975101cfd6b468b200e27";
+      if (latitude & longitude) {
+        console.log("Fetching Data");
+        // console.log(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`)
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
+        );
+        const responseToJson = await response.json();
 
-
-  const fetchWeather = async (latitude, longitude) => {
-    const apiKey = "d7b0a1249bc975101cfd6b468b200e27";
-
-    console.log("Fetching Data");
-    // console.log(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`)
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
-    );
-    const responseToJson = await response.json();
-
-    return {
-      ...responseToJson,
+        return {
+          name: responseToJson.name,
+          description: responseToJson.weather[0].description,
+          main: responseToJson.weather[0].main,
+          id: responseToJson.weather[0].id,
+          icon: responseToJson.weather[0].icon,
+          // ...responseToJson,
+        };
+      }
     };
-  };
 
-fetchWeather(latitude, longitude).then((data) => getWeather(data.weather));
-console.log(weather)
-
-}, [longitude]);
-
-  
-
-  
+    fetchWeather(latitude, longitude).then((data) => {
+      if (latitude & longitude) {
+        console.log("Imported data:");
+        console.log(data);
+        getApiWeather(data);
+      }
+    });
+  }, [latitude, longitude]);
 
   return (
     <>
       <h1>WEATHER CONDITIONS</h1>
-
       
+      <section className="localizer">
+        <p> You are in: {apiWeather.name} | latitude: {latitude} | longitude: {longitude} </p>
+      </section>
 
-      <h3>latitude: {latitude}</h3>
-      <h3>longitude: {longitude}</h3>
+      <WeatherDisplay apiWeather={apiWeather}/>
 
-      {/* <WeatherDisplay id={weather.id} main={weather.main} description={weather.description} icon={weather.icon}></WeatherDisplay> */}
-      <WeatherDisplay/>
-
-      <br />
     </>
   );
 }
-
-// useEffect(() => {
-//   if (imgDate > date) {
-//     console.log("Date!");
-//     setVisible(false);
-//   } else setVisible(true);
-
-//   const fetchImg = async () => {
-//     console.log("Fetching Data");
-//     const response = await fetch(
-//       `${NASA_URL}/planetary/apod?date=${imgDate}&api_key=${NASA_API_KEY}`
-//     );
-
-//     const responseToJson = await response.json();
-//     return {
-//       ...responseToJson,
-//     };
-//   };
-
-//   fetchImg().then((data) => setImageDetails(data));
-// }, [imgDate, NASA_URL]);
 
 export default App;
