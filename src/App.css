@@ -20,6 +20,7 @@
   top: 0.5rem;
   right: 1rem;
   background-color: #213547;
+  color:rgb(219, 223, 201);
   border-radius: 0.5rem;
   display: flex;
   padding: 2px;
@@ -32,7 +33,7 @@
 
   max-width: 600px;
   background-color: rgb(219, 223, 201);
-  color: rgba(61, 58, 58, 0.87);
+  color: rgba(46, 44, 44, 0.966);
   border-radius: 1rem;
   box-shadow: 15px 10px 10px rgba(187, 187, 187, 0.25) ;
 }

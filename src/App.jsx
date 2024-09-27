@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import WeatherDisplay from "./components/WeatherDisplay";
+import { NavLink, Outlet } from "react-router-dom";
 
 function App() {
   const [latitude, setLatitude] = useState("");
@@ -66,14 +67,27 @@ function App() {
 
   return (
     <>
-      <h1>WEATHER CONDITIONS</h1>
-      
+      <header>
+        <h1>WEATHER CONDITIONS</h1>
+        </header>
+      <nav>
+        <NavLink to=" ">None</NavLink>
+        <NavLink to="cities">Cities Overview</NavLink>
+      </nav>
+
       <section className="localizer">
-        <p> You are in: {apiWeather.name} | latitude: {latitude} | longitude: {longitude} </p>
+        <p>
+          {" "}
+          You are in: {apiWeather.name} | latitude: {latitude} | longitude:{" "}
+          {longitude}{" "}
+        </p>
       </section>
 
-      <WeatherDisplay apiWeather={apiWeather}/>
-
+      <WeatherDisplay apiWeather={apiWeather} />
+      
+      <main>
+        <Outlet></Outlet>
+      </main>
     </>
   );
 }
