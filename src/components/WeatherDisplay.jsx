@@ -7,6 +7,7 @@ const WeatherDisplay = ( {apiWeather} ) => {
     <div className="weather_card">
       <section>
         <img src={iconUrl} alt="weather" />
+        <h2> {(apiWeather.temp-273).toFixed(1)} &deg;C</h2>
       </section>
       <section>
       <h3>Place: {apiWeather.name}</h3>

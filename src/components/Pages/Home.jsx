@@ -42,6 +42,7 @@ const Home = () => {
 
         return {
           name: responseToJson.name,
+          temp: responseToJson.main.temp,
           description: responseToJson.weather[0].description,
           main: responseToJson.weather[0].main,
           id: responseToJson.weather[0].id,
