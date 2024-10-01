@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import { NavLink, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import WeatherDisplay from "../WeatherDisplay";
 
-function App() {
+const HomeForecast = () => {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
-  const [apiWeather, getApiWeather] = useState({});
+  // `http://openweathermap.org/img/w/${position.weather[0].icon}.png`
+  // src={`http://openweathermap.org/img/w/${position.weather.icon}.png`}
+  const [forecast, getForecast] = useState({ list: [] });
 
   const localize = () => {
     function success(position) {
@@ -35,15 +36,14 @@ function App() {
       const apiKey = "d7b0a1249bc975101cfd6b468b200e27";
       if (latitude & longitude) {
         console.log("Fetching Data");
-        // console.log(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`)
+        
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
         );
         const responseToJson = await response.json();
 
         return {
-          name: responseToJson.name,
-        
+          list: responseToJson.list,
           // ...responseToJson,
         };
       }
@@ -51,36 +51,27 @@ function App() {
 
     fetchWeather(latitude, longitude).then((data) => {
       if (latitude & longitude) {
-        getApiWeather(data);
+        // console.log("Imported data:");
+        // console.log(data);
+        getForecast(data);
       }
     });
   }, [latitude, longitude]);
 
   return (
-    <>
-      <header>
-        <h1>WEATHER CONDITIONS</h1>
-        </header>
-      <nav>
-        <NavLink to=" ">Home</NavLink>
-        <NavLink to="forecast">5-day Forecast</NavLink>
-        <NavLink to="cities">Cities Overview</NavLink>
-        <NavLink to="cities-forecast">Cities Overview</NavLink>
-      </nav>
-
-      <section className="localizer">
-        <p>
-          {" "}
-          You are in: {apiWeather.name} | latitude: {latitude} | longitude:{" "}
-          {longitude}{" "}
-        </p>
-      </section>
-      
-      <main>
-        <Outlet />
-      </main>
-    </>
+    <div>
+      <ul>
+        
+        {forecast.list.map((position, index) => (
+          <li key={index}>
+            {position.dt_txt} {(position.main.temp - 273).toFixed(1)} &deg;C{" "}
+            {position.weather[0].description} <img src={`http://openweathermap.org/img/w/${position.weather[0].icon}.png`} alt={`http://openweathermap.org/img/w/${position.weather[0].icon}.png`} />{" "}
+          </li>
+        ))}
+        
+      </ul>
+    </div>
   );
-}
+};
 
-export default App;
+export default HomeForecast;

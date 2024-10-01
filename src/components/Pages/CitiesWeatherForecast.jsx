@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import WeatherDisplay from "../WeatherDisplay";
 import CITIES from "../Cities";
 
-const CitiesWeather = () => {
+const CitiesWeatherForecast = () => {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [apiWeather, getApiWeather] = useState({});
@@ -69,4 +69,4 @@ const CitiesWeather = () => {
   );
 };
 
-export default CitiesWeather;
+export default CitiesWeatherForecast;
