@@ -1,6 +1,4 @@
-
-
-const Cities = () => [
+const CITIES =  [
 
     {
         name: "Warsaw",
@@ -32,7 +30,6 @@ const Cities = () => [
         longitude: 35.15,
         latitude: 149.08,
     },
-
-
 ];
 
+export default CITIES;

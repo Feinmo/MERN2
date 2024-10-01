@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import { NavLink, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import WeatherDisplay from "../WeatherDisplay";
 
-function App() {
+const Home = () => {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
@@ -43,7 +42,10 @@ function App() {
 
         return {
           name: responseToJson.name,
-        
+          description: responseToJson.weather[0].description,
+          main: responseToJson.weather[0].main,
+          id: responseToJson.weather[0].id,
+          icon: responseToJson.weather[0].icon,
           // ...responseToJson,
         };
       }
@@ -51,35 +53,18 @@ function App() {
 
     fetchWeather(latitude, longitude).then((data) => {
       if (latitude & longitude) {
+        console.log("Imported data:");
+        console.log(data);
         getApiWeather(data);
       }
     });
   }, [latitude, longitude]);
-
   return (
-    <>
-      <header>
-        <h1>WEATHER CONDITIONS</h1>
-        </header>
-      <nav>
-        <NavLink to=" ">Home</NavLink>
-        <NavLink to="cities">Cities Overview</NavLink>
-        <NavLink to="forecast">5-day Forecast</NavLink>
-      </nav>
-
-      <section className="localizer">
-        <p>
-          {" "}
-          You are in: {apiWeather.name} | latitude: {latitude} | longitude:{" "}
-          {longitude}{" "}
-        </p>
-      </section>
-      
-      <main>
-        <Outlet />
-      </main>
-    </>
+    <div>
+      {" "}
+      <WeatherDisplay apiWeather={apiWeather} />
+    </div>
   );
-}
+};
 
-export default App;
+export default Home;
