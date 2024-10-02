@@ -62,7 +62,6 @@ const Home = () => {
   }, [latitude, longitude]);
   return (
     <div>
-      {" "}
       <WeatherDisplay apiWeather={apiWeather} />
     </div>
   );
