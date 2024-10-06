@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState, Suspense } from "react";
 import CITIES from "../Cities";
 
 const CitiesWeatherForecast = () => {
@@ -53,18 +53,22 @@ const CitiesWeatherForecast = () => {
         ))}
       </select>
 
-      <ul>
-        {forecast.list.map((position, index) => (
-          <li key={index}>
-            {position.dt_txt} {(position.main.temp - 273).toFixed(1)} &deg;C{" "}
-            {position.weather[0].description}{" "}
-            <img
-              src={`http://openweathermap.org/img/w/${position.weather[0].icon}.png`}
-              alt={`http://openweathermap.org/img/w/${position.weather[0].icon}.png`}
-            />{" "}
-          </li>
-        ))}
-      </ul>
+      
+        <ul>
+        <Suspense fallback={<h3>Retreving data...</h3>}>
+          {forecast.list.map((position, index) => (
+            <li key={index}>
+              {position.dt_txt} {(position.main.temp - 273).toFixed(1)} &deg;C{" "}
+              {position.weather[0].description}{" "}
+              <img
+                src={`http://openweathermap.org/img/w/${position.weather[0].icon}.png`}
+                alt={`http://openweathermap.org/img/w/${position.weather[0].icon}.png`}
+              />{" "}
+            </li>
+          ))}
+          </Suspense>
+        </ul>
+      
     </div>
   );
 };

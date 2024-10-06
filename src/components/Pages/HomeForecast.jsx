@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 const HomeForecast = () => {
   const [latitude, setLatitude] = useState("");
@@ -57,6 +57,7 @@ const HomeForecast = () => {
   return (
     <div>
       <ul>
+        <Suspense fallback={<h2>Retreving data ...</h2>}>
         {forecast.list.map((position, index) => (
           <li key={index}>
             {position.dt_txt} {(position.main.temp - 273).toFixed(1)} &deg;C{" "}
@@ -67,6 +68,7 @@ const HomeForecast = () => {
             />{" "}
           </li>
         ))}
+          </Suspense>
       </ul>
     </div>
   );

@@ -37,8 +37,34 @@ nav {
 .weather_card {
 
   max-width: 600px;
-  background-color: rgb(219, 223, 201);
-  color: rgba(46, 44, 44, 0.966);
+  background-color: #1a1a1a;
+  color: rgba(236, 214, 214, 0.966);
   border-radius: 1rem;
   box-shadow: 15px 10px 10px rgba(187, 187, 187, 0.25) ;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 57px;
+  padding: 10px 38px 10px 16px;
+  margin: 1.2rem;
+  background: #525151 url("select-arrows.svg") no-repeat right 16px center;
+  background-size: 10px;
+  transition: border-color .1s ease-in-out,box-shadow .1s ease-in-out;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+select:hover {
+  border: 1px solid #999;
+}
+select:focus {
+  border: 1px solid #999;
+  box-shadow: 0 3px 5px 0 rgba(0,0,0,.2);
+  outline: none;
+}
+
+select::-ms-expand {
+  display:none;
 }

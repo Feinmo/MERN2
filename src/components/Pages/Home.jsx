@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import WeatherDisplay from "../WeatherDisplay";
+import { useEffect, useState, lazy, Suspense } from "react";
+const WeatherDisplay = lazy(() => import( "../WeatherDisplay"));
 
 const Home = () => {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-
+  const [visible, setVisible] = useState(false);
   const [apiWeather, getApiWeather] = useState({});
 
   const localize = () => {
@@ -57,13 +57,16 @@ const Home = () => {
         console.log("Imported data:");
         console.log(data);
         getApiWeather(data);
+        setVisible(true);
       }
     });
   }, [latitude, longitude]);
   return (
+    <Suspense fallback={<h2>Loading ...</h2>}>
     <div>
-      <WeatherDisplay apiWeather={apiWeather} />
+    {visible && <WeatherDisplay apiWeather={apiWeather} />}
     </div>
+    </Suspense>
   );
 };
 

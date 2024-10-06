@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import "./App.css";
 import { NavLink, Outlet } from "react-router-dom";
 
@@ -43,7 +43,7 @@ function App() {
 
         return {
           name: responseToJson.name,
-        
+
           // ...responseToJson,
         };
       }
@@ -60,12 +60,12 @@ function App() {
     <>
       <header>
         <h1>WEATHER CONDITIONS</h1>
-        </header>
+      </header>
       <nav>
         <NavLink to=" ">Home</NavLink>
         <NavLink to="forecast">5-day Forecast</NavLink>
         <NavLink to="cities">Cities Overview</NavLink>
-        <NavLink to="cities-forecast">Cities Overview</NavLink>
+        <NavLink to="cities-forecast">Cities 5-day forecast</NavLink>
       </nav>
 
       <section className="localizer">
@@ -75,9 +75,11 @@ function App() {
           {longitude}{" "}
         </p>
       </section>
-      
+
       <main>
-        <Outlet />
+      
+          <Outlet />
+         
       </main>
     </>
   );

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import WeatherDisplay from "../WeatherDisplay";
+import { useEffect, useState, Suspense, lazy } from "react";
+// import WeatherDisplay from ;
 import CITIES from "../Cities";
+const WeatherDisplay = lazy(() => import("../WeatherDisplay"));
 
 const CitiesWeather = () => {
   const [latitude, setLatitude] = useState("");
@@ -62,8 +63,9 @@ const CitiesWeather = () => {
           </option>
         ))}
       </select>
-
-      {visible && <WeatherDisplay apiWeather={apiWeather} />}
+      <Suspense fallback={<h2>Loading ... </h2>}>
+        {visible && <WeatherDisplay apiWeather={apiWeather} />}
+      </Suspense>
     </div>
   );
 };
